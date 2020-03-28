@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const FriendsRoute = () => <Text>Music</Text>;
+const FriendsRoute = () => <Text>Friends List</Text>;
 
 const MapViewRoute = () => {
   return (

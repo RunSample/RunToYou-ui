@@ -19,8 +19,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'stretch',
   },
-  button: {
-  },
   naviation: {
   },
   text: {
@@ -48,11 +46,6 @@ export default function Main() {
         <Appbar.Action icon="magnify" onPress={_handleSearch} />
         <Appbar.Action icon="dots-vertical" onPress={_handleMore} />
       </Appbar.Header>
-      <Text onTextLayout={{ x: 10, y: 10, width: 20}} >dd</Text>
-      <Button style={styles.button} 
-        raised theme={{ roundness: 3 }}>
-        LET`S RUNNING
-      </Button>
       <Navigation style={styles.naviation} />
     </View>
   );
