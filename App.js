@@ -22,6 +22,7 @@ function HomeScreen({ navigation }) {
   function loginCheck (value) {
     if(value == 'admin'){
       return true;
+      
     }else{
       return false;
     }
