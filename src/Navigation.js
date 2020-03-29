@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
 import { StyleSheet, View, Dimensions } from 'react-native';
 import MapViewPage from './MapViewPage';
+import FriendPage from './FriendPage';
 
 
 const styles = StyleSheet.create({
@@ -17,7 +18,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const FriendsRoute = () => <Text>Friends List</Text>;
+const FriendsRoute = () => {
+  return (
+    <FriendPage />
+  )
+};
 
 const MapViewRoute = () => {
   return (
