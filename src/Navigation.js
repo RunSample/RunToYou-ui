@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
 import { StyleSheet, View, Dimensions } from 'react-native';
 import MapViewPage from './MapViewPage';
+import BoardPage from './BoardPage';
 
 
 const styles = StyleSheet.create({
@@ -25,7 +26,11 @@ const MapViewRoute = () => {
   )
 };
 
-const RecentsRoute = () => <Text>Recents</Text>;
+const BoardRoute = () => {
+  return (
+    <BoardPage />
+  )
+};
 
 const SetupRoute = () => <Text>Setup</Text>;
 
@@ -35,7 +40,7 @@ export default class Navigation extends React.Component {
     routes: [
       { key: 'friends', title: 'Friends', icon: 'queue-music' },
       { key: 'albums', title: 'Albums', icon: 'album' },
-      { key: 'recents', title: 'Recents', icon: 'history' },
+      { key: 'boards', title: 'Boards', icon: 'history' },
       { key: 'setup', title: 'Setup', icon: 'setup' },
     ],
   };
@@ -45,7 +50,7 @@ export default class Navigation extends React.Component {
   _renderScene = BottomNavigation.SceneMap({
     friends: FriendsRoute,
     albums: MapViewRoute,
-    recents: RecentsRoute,
+    boards: BoardRoute,
     setup: SetupRoute,
   });
 
