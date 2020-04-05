@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Image } from 'react-native';
 
 const styles = StyleSheet.create({
 top: {
@@ -29,24 +29,46 @@ container: {
     text: {
     fontSize:50,
     color: 'white'
-    }
+},
+linearGradient: {
+  paddingLeft: 15,
+  paddingRight: 15,
+  marginTop:300,
+  width:350,
+  height:50,
+  borderRadius: 30
+},
+buttonText: {
+  fontSize: 25,
+  textAlign: 'center',
+  margin: 10,
+  color: '#ffffff',
+  backgroundColor: 'transparent',
+},
 });
 
 export default function FirstPage() {
   return (
     <LinearGradient colors={['#24243e', '#3c1053']} style={styles.container}>
       <View style={styles.top}>
+        <Image
+          style={{
+            resizeMode: "stretch",
+            height: 380,
+            width: 280,
+            marginBottom:-200
+          }}
+          source={require("./resources/images/KakaoTalk_20200405_142227008.png")}
+        />
       </View>
       <View style={styles.bottom}>
         <LinearGradient
-          colors={['#a80077', '#ee0979']}
-          style={{ padding: 15, alignItems: 'center', borderRadius: 30 }}>
-          <Text
-            style={{
-              backgroundColor: 'transparent',
-              fontSize: 15,
-              color: '#fff',
-            }}>
+          start={{x: 0, y: 0}} 
+          end={{x: 1, y: 0}} 
+          colors={['#61045F', '#ee0979']}
+          style={styles.linearGradient}
+          >
+          <Text style={styles.buttonText}>
             LET'S RUNNING
           </Text>
         </LinearGradient>
