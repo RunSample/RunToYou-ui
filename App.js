@@ -2,6 +2,7 @@ import React from 'react';
 import { DefaultTheme, Button, Provider as PaperProvider } from 'react-native-paper';
 import { AppRegistry } from 'react-native';
 import Main from './src/Main';
+import FirstPage from './src/FirstPage';
 
 const theme = {
   ...DefaultTheme,
@@ -16,7 +17,8 @@ const theme = {
 export default function App() {
   return (
     <PaperProvider theme={theme}>
-      <Main />
+      {/* <Main /> */}
+      <FirstPage></FirstPage>
     </PaperProvider>
   );
 }
