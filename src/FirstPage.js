@@ -58,7 +58,7 @@ export default function FirstPage() {
             width: 280,
             marginBottom:-200
           }}
-          source={require("./resources/images/KakaoTalk_20200405_142227008.png")}
+          source={require("./resources/images/runtoyou_logo_1.png")}
         />
       </View>
       <View style={styles.bottom}>

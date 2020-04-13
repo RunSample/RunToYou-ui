@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Blank Template",
+    "name": "RunToYou",
     "slug": "RunToYou-ui",
     "privacy": "public",
     "sdkVersion": "36.0.0",
@@ -11,9 +11,9 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./src/resources/images/runtoyou_logo_2_square.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./src/resources/images/runtoyou_logo_2.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,6 +23,10 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "com.runtoyou",
+      "versionCode": 1
+    },
     "ios": {
       "supportsTablet": true
     }
