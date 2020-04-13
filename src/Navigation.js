@@ -38,19 +38,19 @@ export default class Navigation extends React.Component {
   state = {
     index: 0,
     routes: [
-      { key: 'friends', title: 'Friends', icon: 'queue-music' },
-      { key: 'albums', title: 'Albums', icon: 'album' },
-      { key: 'boards', title: 'Boards', icon: 'history' },
-      { key: 'setup', title: 'Setup', icon: 'setup' },
+      { key: 'home', title: 'Home', icon: 'home' },
+      { key: 'running', title: 'Running', icon: 'run-fast' },
+      { key: 'friends', title: 'Boards', icon: 'account-multiple' },
+      { key: 'setup', title: 'Setup', icon: 'account' },
     ],
   };
 
   _handleIndexChange = index => this.setState({ index });
 
   _renderScene = BottomNavigation.SceneMap({
+    home: BoardRoute,
+    running: MapViewRoute,
     friends: FriendsRoute,
-    albums: MapViewRoute,
-    boards: BoardRoute,
     setup: SetupRoute,
   });
 

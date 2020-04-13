@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { DefaultTheme, Button, Provider as PaperProvider } from 'react-native-paper';
 import { AppRegistry } from 'react-native';
 import Main from './src/Main';
@@ -15,10 +15,19 @@ const theme = {
 };
 
 export default function App() {
+  const [isLoding, setIsLoding] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoding(false); // count is 0 here
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <PaperProvider theme={theme}>
-      <Main />
-      {/* <FirstPage></FirstPage> */}
+      {isLoding ? <FirstPage /> : <Main />}
+      
     </PaperProvider>
   );
 }
