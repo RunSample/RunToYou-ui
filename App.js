@@ -3,6 +3,7 @@ import { DefaultTheme, Button, Provider as PaperProvider } from 'react-native-pa
 import { AppRegistry } from 'react-native';
 import Main from './src/Main';
 import FirstPage from './src/FirstPage';
+import LoginPage from './src/LoginPage';
 
 const theme = {
   ...DefaultTheme,
@@ -26,8 +27,8 @@ export default function App() {
 
   return (
     <PaperProvider theme={theme}>
-      {isLoding ? <FirstPage /> : <Main />}
-      
+      {/* {isLoding ? <FirstPage /> : <Main />} */}
+      <LoginPage></LoginPage>
     </PaperProvider>
   );
 }
