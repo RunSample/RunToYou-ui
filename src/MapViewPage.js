@@ -1,11 +1,14 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, Image, Dimensions, Linking } from 'react-native';
+import { StyleSheet, View, Text, Image, Dimensions, Linking, Platform, PermissionsAndroid } from 'react-native';
 import { Button } from 'react-native-paper';
 import * as Google from 'expo-google-app-auth';
 import * as AppAuth from 'expo-app-auth';
 import MapView, {Marker} from 'react-native-maps';
 import data from "./resources/config/data.json"
 import { TouchableOpacity, BorderlessButton } from 'react-native-gesture-handler';
+import MyLocationMapMarker from './components/MyLocationMapMarker';
+import Geolocation from 'react-native-geolocation-service'
+import * as Location from 'expo-location';
 //import { GoogleSigninButton } from '@react-native-community/google-signin';
 
 const styles = StyleSheet.create({
@@ -22,6 +25,63 @@ const styles = StyleSheet.create({
   mapStyle: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height*(5/5),
+  },
+  mapMarker: {
+    zIndex: 1000,
+  },
+  markerContainer: {
+    width: HEADING_BOX_SIZE,
+    height: HEADING_BOX_SIZE,
+  },
+  markerHalo: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    top: 0,
+    left: 0,
+    width: HALO_SIZE,
+    height: HALO_SIZE,
+    borderRadius: Math.ceil(HALO_SIZE / 2),
+    margin: (HEADING_BOX_SIZE - HALO_SIZE) / 2,
+    shadowColor: 'black',
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 0,
+      width: 0,
+    },
+  },
+  marker: {
+    justifyContent: 'center',
+    backgroundColor: colorOfmyLocationMapMarker,
+    width: SIZE,
+    height: SIZE,
+    borderRadius: Math.ceil(SIZE / 2),
+    margin: (HEADING_BOX_SIZE - SIZE) / 2,
+  },
+  markerText: { 
+    width: 0, height: 0 
+  },
+  heading: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: HEADING_BOX_SIZE,
+    height: HEADING_BOX_SIZE,
+    alignItems: 'center',
+  },
+  headingPointer: {
+    width: 0,
+    height: 0,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderTopWidth: 0,
+    borderRightWidth: ARROW_SIZE * 0.75,
+    borderBottomWidth: ARROW_SIZE,
+    borderLeftWidth: ARROW_SIZE * 0.75,
+    borderTopColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: colorOfmyLocationMapMarker,
+    borderLeftColor: 'transparent',
   },
   button: {
     //flexDirection: 'row',
@@ -47,7 +107,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position:'absolute',
     top:'88%',
-    // flexDirection: 'row',
+    flexDirection: 'row',
     // marginVertical: 20,
     // backgroundColor: 'transparent',
   },
@@ -64,6 +124,15 @@ const LATITUDE = 37.543162;
 const LONGITUDE = 127.016427;
 const LATITUDE_DELTA = 0.0122;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+
+const SIZE = 35;
+const HALO_RADIUS = 6;
+const ARROW_SIZE = 7;
+const ARROW_DISTANCE = 6;
+const HALO_SIZE = SIZE + HALO_RADIUS;
+const HEADING_BOX_SIZE = HALO_SIZE + ARROW_SIZE + ARROW_DISTANCE;
+const ANCHOR = { x: 0.5, y: 0.5 };
+const colorOfmyLocationMapMarker = 'blue';
 let id = 0;
 
 function randomColor() {
@@ -84,6 +153,14 @@ export default class MapViewPage extends React.Component {
         longitudeDelta: LONGITUDE_DELTA,
       },
       markers: [],
+      coordinate: {
+        latitude: LATITUDE,
+        longitude: LONGITUDE,
+        
+      },
+      amount: 0,
+      heading: 10,
+      enableHack: false,
     }
   }
   
@@ -100,7 +177,53 @@ export default class MapViewPage extends React.Component {
     });
   }
 
+  getLocation = async () => {
+    const hasLocationPermission = await this.hasLocationPermission();
+    if (!hasLocationPermission) return;
+    let { status } = await Location.requestPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+    }
+
+    let {coords} = await Location.getCurrentPositionAsync({});
+    console.log(coords);
+    this.setState({
+      coordinate : {
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+        
+      },
+      heading: coords.heading,
+    })
+  }
+
+  hasLocationPermission = async () => {
+    if (Platform.OS === 'android' && Platform.Version <30) {
+      return true;
+    }
+  }
+
   componentDidMount = () => {
+    // if (Platform.OS === 'android') {
+    //   //Location.requestPermissionsAsync();
+    //   PermissionsAndroid.requestPermission(
+    //     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+    //   ).then(granted => {
+    //     if (granted) {
+    //       Geolocation.getCurrentPosition(
+    //         (position) => {
+    //           console.log(position);
+              
+    //         },
+    //         (error) => {alert('position');
+    //           console.log(error.code, error.message);
+    //         },
+    //         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000}
+    //       )
+    //     }
+    //   });
+    // }
+    this.getLocation();
     //GoogleSignin.configure();
   }
 
@@ -138,11 +261,23 @@ export default class MapViewPage extends React.Component {
   //   };
   // }
 
-  // onRegionChange = (region) => {
-  //   this.setState({region});
-  // }
+  onRegionChange = (region) => {
+    this.setState({region});
+  }
+  increment() {
+    this.setState((prevState) => ({ heading: prevState.heading + 10 }));
+  }
+
+  decrement() {
+    this.setState((prevState) => ({ heading: prevState.heading - 10 }));
+  }
+
+  toggleHack() {
+    this.setState({ enableHack: !this.state.enableHack });
+  }
 
   render() {
+    //const rotate = typeof heading === 'number' && heading >= 0 ? `${heading}deg` : null;
     return (
         <View style={styles.container}>
           {/* <Button style={styles.button} 
@@ -171,25 +306,55 @@ export default class MapViewPage extends React.Component {
           /> */}
           <MapView style={styles.mapStyle} 
             region={this.state.region}
-            onRegionChange={this.onRegionChange} 
-            onPress={e => this.onMapPress(e)}
+            //onRegionChange={this.onRegionChange}
+            //initialRegion={this.state.region}
+            //onPress={e => this.onMapPress(e)}
           >
-            {this.state.markers.map(marker => (
+            <MyLocationMapMarker
+              coordinate={this.state.coordinate}
+              heading={this.state.heading}
+              enableHack={this.state.enableHack}
+            />
+            {/* {this.state.markers.map(marker => (
               <Marker
+                style={styles.mapMarker}
                 key={marker.key}
                 coordinate={marker.coordinate}
                 pinColor={marker.color}
-                //title={marker.title}
-                //description={marker.description}
-              />
-            ))}
+                //anchor={ANCHOR}
+              >
+              </Marker>
+            ))} */}
           </MapView>
           <View style={styles.buttonContainer}>
           <TouchableOpacity
-              onPress={() => this.setState({markers: []})}
+              onPress={() => this.decrement()}
               style={styles.button}
             >
-              <Text style={styles.text}>시작</Text>
+              <Text style={styles.text}>-</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.setState((prevState)=>({
+                markers: [],
+                enableHack: !prevState.enableHack
+              }))}
+              style={styles.button}
+            >
+              <Text style={styles.text}>
+                {this.state.enableHack ? 'Disable Hack' : 'Enable Hack'}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.increment()}
+              style={styles.button}
+            >
+              <Text style={styles.text}>+</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={this.googleLogin}
+              style={styles.button}
+            >
+              <Text style={styles.text}>login</Text>
             </TouchableOpacity>
             
           </View>

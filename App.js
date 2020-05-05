@@ -27,8 +27,8 @@ export default function App() {
 
   return (
     <PaperProvider theme={theme}>
-      {/* {isLoding ? <FirstPage /> : <Main />} */}
-      <LoginPage></LoginPage>
+      {isLoding ? <FirstPage /> : <Main />}
+      {/* <LoginPage></LoginPage> */}
     </PaperProvider>
   );
 }
