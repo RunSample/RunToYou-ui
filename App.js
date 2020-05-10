@@ -4,6 +4,7 @@ import { AppRegistry } from 'react-native';
 import Main from './src/Main';
 import FirstPage from './src/FirstPage';
 import LoginPage from './src/LoginPage';
+import JoinPage from './src/JoinPage';
 
 const theme = {
   ...DefaultTheme,
@@ -28,7 +29,9 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       {/* {isLoding ? <FirstPage /> : <Main />} */}
-      <LoginPage></LoginPage>
+      {/* <LoginPage></LoginPage> */}
+      {/* joinPage 테스트중입니다. */}
+      <JoinPage></JoinPage>
     </PaperProvider>
   );
 }
