@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'native-base';
-import {StyleSheet, Image, Text, TextInput, Button, CheckBox } from 'react-native';
+import {StyleSheet, Image, Text, TextInput, Button, CheckBox , Alert } from 'react-native';
 // import { Checkbox } from 'react-native-paper';
 
 const styles = StyleSheet.create({
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     middle : {
         height: '85%',
         width: '80%',
-        flex : 3,
+        flex : 4,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'stretch',
@@ -28,10 +28,11 @@ const styles = StyleSheet.create({
     },
     bottom : {
         height: '10%',
-        flex : 2,
+        flex : 1,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'stretch',
+        marginTop : '10%'
     },
     text : {
         fontWeight : 'bold', 
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     },
     fixToText: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
     },
 });
 
@@ -192,16 +193,18 @@ export default function JoinPage(){
                         <Text style={styles.label}>부산</Text>
                     </View>
                 </View>
-                <View style={styles.fixToText}>
-                    <Button
-                        title="JOIN IN"
-                        color="#ee0979"
-                        onPress={() => Alert.alert('Left button pressed')}
-                    />
-                    <Button
-                        title="CANCEL"
-                        onPress={() => Alert.alert('Right button pressed')}
-                    />
+                <View style={styles.bottom}>
+                    <View style={styles.fixToText}>
+                        <Button
+                            title="JOIN IN"
+                            color="#ee0979"
+                            onPress={() => Alert.alert('Left button pressed')}
+                        />
+                        <Button
+                            title="CANCEL"
+                            onPress={() => Alert.alert('Right button pressed')}
+                        />
+                    </View>
                 </View>
             </View>
             <View style={styles.bottom}></View>
