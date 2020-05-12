@@ -11,6 +11,7 @@ web-build/
 web-report/
 yarn-error.log
 package-lock.json
+data.json
 
 # macOS
 .DS_Store
