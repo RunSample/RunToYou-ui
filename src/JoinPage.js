@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { View } from 'native-base';
 import {StyleSheet, Image, Text, TextInput, Button, CheckBox , Alert } from 'react-native';
+import axios from 'axios';
+import { useRef } from 'react';
 // import { Checkbox } from 'react-native-paper';
 
 const styles = StyleSheet.create({
@@ -53,12 +55,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
     },
+    inputBox: {
+        borderStyle : 'solid',
+    }
 });
 
 function IdTextInput(props) {
     return (
       <TextInput
-        // style={styles.inputBox}
+        style={styles.inputBox}
         {...props} 
         editable
         maxLength={15}
@@ -67,15 +72,19 @@ function IdTextInput(props) {
   }
   
 function PhoneTextInput(props) {
-return (
-    <TextInput
-    // style={[styles.inputBox]}
-    {...props} 
-    editable
-    maxLength={15}
-    />
-);
+    return (
+        <TextInput
+        // style={[styles.inputBox]}
+        {...props} 
+        editable
+        maxLength={15}
+        />
+    );
 }
+
+function CancelClick(){
+        console.log('CANCEL CLICK');
+    }
 
 export default function JoinPage(){
     //관심사
@@ -91,6 +100,21 @@ export default function JoinPage(){
     const [isSelected8, setSelection8] = React.useState(false);
     const [isSelected9, setSelection9] = React.useState(false);
     const [isSelected10, setSelection10] = React.useState(false);
+
+    //아이디
+    const [idText, setIdText] = React.useState();
+
+    //휴대폰 번호
+    const [phoneText, setPhoneText] = React.useState();
+
+    function JoinClick(){
+        console.log('JOIN IN CLICK');
+        console.log(idText);
+        console.log(phoneText);
+    
+        //axios.get
+    }
+    
 
     return(
         <View style={styles.page}>
@@ -121,13 +145,13 @@ export default function JoinPage(){
                 </View>
                 <Text style={styles.text}>아이디</Text>
                 <IdTextInput
-                // onChangeText={text => onIdChangeText(text)}
-                // value={value}
+                    value={idText}
+                    onChangeText={setIdText}
                 />
                 <Text style={styles.text}>휴대폰번호</Text>
                 <PhoneTextInput
-                //onChangeText={text => onPwChangeText(text)}
-                //value={value}
+                    onChangeText={setPhoneText}
+                    value={phoneText}
                 />
                 <Text style={styles.text}>관심사</Text>
                 <View>
@@ -198,11 +222,11 @@ export default function JoinPage(){
                         <Button
                             title="JOIN IN"
                             color="#ee0979"
-                            onPress={() => Alert.alert('Left button pressed')}
+                            onPress={JoinClick}
                         />
                         <Button
                             title="CANCEL"
-                            onPress={() => Alert.alert('Right button pressed')}
+                            onPress={CancelClick}
                         />
                     </View>
                 </View>
