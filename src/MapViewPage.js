@@ -185,7 +185,7 @@ export default class MapViewPage extends React.Component {
       setErrorMsg('Permission to access location was denied');
     }
 
-    let {coords} = await Location.getCurrentPositionAsync({});
+    let {coords, timestamp} = await Location.getCurrentPositionAsync({});
     console.log(coords);
     this.setState({
       coordinate : {
@@ -308,14 +308,14 @@ export default class MapViewPage extends React.Component {
             region={this.state.region}
             //onRegionChange={this.onRegionChange}
             //initialRegion={this.state.region}
-            //onPress={e => this.onMapPress(e)}
+            onPress={e => this.onMapPress(e)}
           >
             <MyLocationMapMarker
               coordinate={this.state.coordinate}
               heading={this.state.heading}
               enableHack={this.state.enableHack}
             />
-            {/* {this.state.markers.map(marker => (
+            {this.state.markers.map(marker => (
               <Marker
                 style={styles.mapMarker}
                 key={marker.key}
@@ -324,7 +324,7 @@ export default class MapViewPage extends React.Component {
                 //anchor={ANCHOR}
               >
               </Marker>
-            ))} */}
+            ))}
           </MapView>
           <View style={styles.buttonContainer}>
           <TouchableOpacity
