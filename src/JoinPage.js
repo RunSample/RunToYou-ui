@@ -112,7 +112,7 @@ export default function JoinPage(){
         console.log(idText);
         console.log(phoneText);
     
-        axios.get('http://192.168.43.172:8080/join');
+        //axios.get
     }
     
 
