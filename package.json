@@ -17,14 +17,18 @@
     "expo": "~36.0.0",
     "expo-google-app-auth": "^8.1.0",
     "expo-linear-gradient": "~8.0.0",
+    "expo-task-manager": "~8.0.0",
+    "moment": "^2.25.3",
     "native-base": "2.13.8",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
+    "react-native-elements": "^2.0.0",
+    "react-native-geolocation-service": "^4.0.1",
     "react-native-check-box": "^2.1.7",
-    "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "~1.5.0",
     "react-native-linear-gradient": "^2.5.6",
+    "react-native-location": "^2.5.0",
     "react-native-maps": "0.26.1",
     "react-native-paper": "^3.6.0",
     "react-native-reanimated": "~1.4.0",
@@ -36,5 +40,6 @@
     "@babel/core": "^7.0.0",
     "babel-preset-expo": "~8.0.0"
   },
-  "private": true
+  "private": true,
+  "version": "0.0.0"
 }
