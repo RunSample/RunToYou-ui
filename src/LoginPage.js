@@ -2,10 +2,11 @@ import * as React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Text, View, TouchableHighlight, StyleSheet, Image, ImageBackground, TextInput, Button } from 'react-native';
 import { CheckBox } from 'react-native-elements';
+import { checkBox } from 'react-native-check-box';
 
 const styles = StyleSheet.create({
   header: {
-    height:'10%',
+    height:'33%',
     width: '100%'
   },
   bgImage: {
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   bottom: {
-    height: '35%' ,
+    height: '33%' ,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start'
@@ -25,7 +26,9 @@ const styles = StyleSheet.create({
    height: '100%'
   },
   middlePage:{
-    height: '55%'
+    height: '34%',
+    width: '40%',
+    marginLeft : '15%'
   },
   buttonBox:{
     marginRight:40,
@@ -69,9 +72,14 @@ const styles = StyleSheet.create({
     width:300,
     height:40,
     borderRadius: 30,
-    marginTop : '7%'
+    marginTop : '2%'
   },
+  infoSaveBtn: {
+    backgroundColor : '#00ff0000'
+  }
 });
+
+
 
 function IdTextInput(props) {
   return (
@@ -97,14 +105,14 @@ function PwTextInput(props) {
 }
 
 export default function LoginPage() {
-  //const [value, onIdChangeText] = React.useState('아이디를 입력하세요.');
+  const [ checked , setChecked ] = React.useState(false);
 
   return (
     <View style={styles.backPage} >
         
         <ImageBackground 
           style={styles.bgImage} 
-          source={require("./resources/images/joinTestImg.jpg")}
+          source={require("./resources/images/KakaoTalk_20200426_121712515.jpg")}
           resizeMode="cover" 
         >
           <View style={styles.header}>
@@ -117,7 +125,9 @@ export default function LoginPage() {
           <View
             style={styles.middlePage}
           >
-              <View style={{marginLeft: '22%' , marginTop : '40%'}}>
+              <View 
+              style={{ marginTop : '40%'}}
+              >
                 <Text style={{fontWeight : 'bold'}}>아이디</Text>
                 <IdTextInput
                   // onChangeText={text => onIdChangeText(text)}
@@ -128,12 +138,17 @@ export default function LoginPage() {
                   //onChangeText={text => onPwChangeText(text)}
                   //value={value}
                 />
-                <CheckBox
-                  center
-                  title='정보저장'
-                  checked={true}
-                  checkedColor={'purple'}
-                />
+                <View style={{marginLeft : '20%'}}>
+                  <CheckBox
+                    right
+                    title='정보저장'
+                    checked={checked}
+                    checkedColor={'purple'}
+                    onPress={() => checked ? setChecked(false) :  setChecked(true) }
+                    //style={styles.infoSaveBtn}
+                    containerStyle={styles.infoSaveBtn}
+                  />
+                </View>
                 <LinearGradient
                   start={{x: 0, y: 0}} 
                   end={{x: 1, y: 0}} 

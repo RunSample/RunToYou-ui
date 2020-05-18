@@ -32,8 +32,8 @@ container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    },
-    text: {
+},
+text: {
     fontSize:50,
     color: 'white'
 },
